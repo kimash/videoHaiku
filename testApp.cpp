@@ -22,7 +22,7 @@ void testApp::setup(){
 void testApp::update(){
     cars.update();
     water.update();
-    if (cars.isFrameNew() && water.isFrameNew()) {
+    if (water.isFrameNew()) {
         for (int y = 0; y < water.getHeight(); y++) {
             for (int x = 0; x < water.getWidth(); x++) {
                 ofColor carsFrame = cars.getPixelsRef().getColor(x, y);
