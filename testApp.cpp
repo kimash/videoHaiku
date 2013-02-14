@@ -11,10 +11,10 @@ void testApp::setup(){
     cars.setLoopState(OF_LOOP_NONE);
     water.setLoopState(OF_LOOP_NONE);
     totalFrames = 0;
-    ofEnableAlphaBlending();
     cars.play();
     water.play();
     water.setVolume(0);
+    dest.allocate(water.getWidth(), water.getHeight(), water.getPixelsRef().getImageType());
 
 //    }
 }
@@ -22,29 +22,45 @@ void testApp::setup(){
 //--------------------------------------------------------------
 void testApp::update(){
     cars.update();
-//    if(cars.isFrameNew()) {
-//        totalFrames++;
-//        for (int y = 0; y < cars.getHeight(); y++) {
-//            for (int x = 0; x < cars.getWidth(); x++) {
-//                ofFloatColor currentAvg, newAvg, currentPixel; 
-//                currentAvg = accumulation.getColor(x, y);
-//                currentPixel = cars.getPixelsRef().getColor(x, y);
-//                newAvg = (currentAvg*totalFrames + currentPixel)/totalFrames + 1;
-//                accumulation.setColor(x, y, newAvg);
-//            }
-//        }
-//        accumulation.reloadTexture();    
     water.update();
-//    }
+    if (cars.isFrameNew() && water.isFrameNew()) {
+        for (int y = 0; y < cars.getHeight(); y++) {
+            for (int x = 0; x < cars.getWidth(); x++) {
+                ofColor carsFrame = cars.getPixelsRef().getColor(x, y);
+                for (int y = 0; y < water.getHeight(); y++) {
+                    for (int x = 0; x < water.getWidth(); x++) {
+                        ofColor waterFrame = water.getPixelsRef().getColor(x, y);
+                        dest.getPixelsRef().setColor(x, y, carsFrame*waterFrame);
+                    }
+                }
+            }
+        }
+        dest.reloadTexture();
+    }
+    
 }
 //--------------------------------------------------------------
 void testApp::draw(){
     cars.draw(0, 0, 480, 270);
     water.draw(0, 270, 480, 270);
-    cars.draw(480, 540, -480, 270);
+    dest.draw(0, 540, 480, 270);
+//    cars.draw(480, 540, -480, 270);
 //    if (cars.getIsMovieDone()) {
 //        water.play();
 //        water.setVolume(0);
+//        for (int y = 0; y < cars.getHeight(); y++) {
+//            for (int x = 0; x < cars.getWidth(); x++) {
+//                ofColor carsFrame = cars.getPixelsRef().getColor(x, y);
+//                for (int y = 0; y < water.getHeight(); y++) {
+//                    for (int x = 0; x < water.getWidth(); x++) {
+//                        ofColor waterFrame = water.getPixelsRef().getColor(x, y);
+//                        dest.getPixelsRef().setColor(x, y, carsFrame*waterFrame);
+//                    }
+//                }
+//            }
+//        }
+//        
+        
 //    }
 }
 
