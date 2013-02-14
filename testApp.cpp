@@ -10,7 +10,6 @@ void testApp::setup(){
     water.loadMovie("converted/waterZurich.mov");
     cars.setLoopState(OF_LOOP_NONE);
     water.setLoopState(OF_LOOP_NONE);
-    totalFrames = 0;
     cars.play();
     water.play();
     water.setVolume(0);
@@ -24,15 +23,11 @@ void testApp::update(){
     cars.update();
     water.update();
     if (cars.isFrameNew() && water.isFrameNew()) {
-        for (int y = 0; y < cars.getHeight(); y++) {
-            for (int x = 0; x < cars.getWidth(); x++) {
+        for (int y = 0; y < water.getHeight(); y++) {
+            for (int x = 0; x < water.getWidth(); x++) {
                 ofColor carsFrame = cars.getPixelsRef().getColor(x, y);
-                for (int y = 0; y < water.getHeight(); y++) {
-                    for (int x = 0; x < water.getWidth(); x++) {
-                        ofColor waterFrame = water.getPixelsRef().getColor(x, y);
+                     ofColor waterFrame = water.getPixelsRef().getColor(x, y);
                         dest.getPixelsRef().setColor(x, y, carsFrame*waterFrame);
-                    }
-                }
             }
         }
         dest.reloadTexture();
@@ -44,24 +39,6 @@ void testApp::draw(){
     cars.draw(0, 0, 480, 270);
     water.draw(0, 270, 480, 270);
     dest.draw(0, 540, 480, 270);
-//    cars.draw(480, 540, -480, 270);
-//    if (cars.getIsMovieDone()) {
-//        water.play();
-//        water.setVolume(0);
-//        for (int y = 0; y < cars.getHeight(); y++) {
-//            for (int x = 0; x < cars.getWidth(); x++) {
-//                ofColor carsFrame = cars.getPixelsRef().getColor(x, y);
-//                for (int y = 0; y < water.getHeight(); y++) {
-//                    for (int x = 0; x < water.getWidth(); x++) {
-//                        ofColor waterFrame = water.getPixelsRef().getColor(x, y);
-//                        dest.getPixelsRef().setColor(x, y, carsFrame*waterFrame);
-//                    }
-//                }
-//            }
-//        }
-//        
-        
-//    }
 }
 
 //--------------------------------------------------------------

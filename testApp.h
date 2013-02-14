@@ -22,5 +22,4 @@ class testApp : public ofBaseApp{
     ofVideoPlayer water;
     ofVideoPlayer cars;
     ofImage dest;
-    int totalFrames;
 };
